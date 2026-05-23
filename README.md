@@ -20,6 +20,57 @@ Each GitHub Actions run also prints these URLs in the **Workflow summary** tab.
 
 ---
 
+## Project flow
+
+```mermaid
+flowchart TD
+    subgraph dev [Local development]
+        A[Edit js/constants.js<br/>app name, email, package] --> B[Edit HTML pages<br/>privacy-policy.html, terms-and-conditions.html]
+        B --> C[npm run build]
+        C --> D[scripts/generate-dates.mjs]
+        D --> E[js/constants.generated.js<br/>last-updated dates from git]
+        E --> F[npm run preview]
+        F --> G[Browser loads pages]
+    end
+
+    subgraph runtime [Browser runtime]
+        G --> H[js/constants.js]
+        H --> I[js/constants.generated.js]
+        I --> J[js/main.js replaces placeholders<br/>APP_NAME, APP_EMAIL, dates, etc.]
+        J --> K[Rendered HealthSync legal site]
+    end
+
+    subgraph cicd [GitHub Actions CI/CD]
+        L[git push to main/master] --> M{Event type?}
+        M -->|Pull request| N[verify job only<br/>build + checks]
+        M -->|Push to main| O[verify job]
+        O --> P[generate-dates.mjs]
+        P --> Q[Package _site folder]
+        Q --> R[Deploy to gh-pages branch]
+        R --> S[GitHub Pages serves site]
+    end
+
+    B --> L
+    S --> T[Live URLs<br/>Home · Privacy · Terms]
+    T --> U[Google Play Console<br/>policy links]
+```
+
+### Flow summary
+
+| Stage | What happens |
+|-------|----------------|
+| **1. Configure** | Set branding in `js/constants.js` (name, email, Play Store package). |
+| **2. Edit content** | Update legal text in `privacy-policy.html` and `terms-and-conditions.html`. |
+| **3. Build** | `generate-dates.mjs` reads git history and writes `constants.generated.js`. |
+| **4. Preview** | `npm run preview` serves the site locally with all placeholders filled. |
+| **5. Push** | Commit and push to `main` — GitHub Actions runs automatically. |
+| **6. Verify** | Workflow validates files and generated dates (runs on PRs too). |
+| **7. Deploy** | On `main`, site files are published to the `gh-pages` branch. |
+| **8. Publish** | GitHub Pages hosts the site at `gmddev074.github.io/HealyhSyncPrivacyPolicy/`. |
+| **9. Use** | Copy Privacy Policy and Terms URLs into Google Play Console. |
+
+---
+
 ## What this project does
 
 1. **Legal pages** — Professional Privacy Policy and Terms & Conditions for HealthSync, suitable for Google Play Store compliance.
@@ -43,6 +94,7 @@ Each GitHub Actions run also prints these URLs in the **Workflow summary** tab.
 ├── index.html                           # Landing page with links to legal docs
 ├── privacy-policy.html                  # Privacy Policy
 ├── terms-and-conditions.html            # Terms & Conditions
+├── LICENSE                              # Copyright notice
 ├── css/style.css                        # Shared styles
 ├── js/
 │   ├── constants.js                     # Manual config (edit this)
@@ -168,4 +220,6 @@ Use these URLs in Google Play Console:
 
 ## License
 
-All rights reserved © HealthSync.
+Copyright © 2026 **HealthSync**. All rights reserved.
+
+See [LICENSE](./LICENSE) for the full copyright notice.
