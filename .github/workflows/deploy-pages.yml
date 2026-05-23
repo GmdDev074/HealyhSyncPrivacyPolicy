@@ -11,13 +11,14 @@ permissions:
   contents: read
   pages: write
   id-token: write
+  administration: write
 
 concurrency:
   group: pages-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
-  build:
+  verify:
     name: Build & verify
     runs-on: ubuntu-latest
     steps:
@@ -45,8 +46,31 @@ jobs:
           grep -q "PRIVACY_LAST_UPDATED" js/constants.generated.js
           grep -q "TERMS_LAST_UPDATED" js/constants.generated.js
 
-      - name: Setup GitHub Pages
+  build:
+    name: Package for Pages
+    needs: verify
+    if: github.event_name != 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Generate dynamic last-updated dates
+        env:
+          GITHUB_REPOSITORY: ${{ github.repository }}
+        run: node scripts/generate-dates.mjs
+
+      - name: Enable GitHub Pages
         uses: actions/configure-pages@v5
+        with:
+          enablement: true
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
@@ -68,11 +92,11 @@ jobs:
 
   test-summary:
     name: Test run summary
-    needs: build
-    if: always() && needs.build.result == 'success'
+    needs: verify
+    if: always() && needs.verify.result == 'success'
     runs-on: ubuntu-latest
     steps:
-      - name: Print live URLs (after merge to default branch)
+      - name: Print live URLs
         env:
           REPO: ${{ github.repository }}
         run: |
@@ -88,7 +112,7 @@ jobs:
           echo "| Terms & Conditions | ${BASE}/terms-and-conditions.html |" >> "$GITHUB_STEP_SUMMARY"
           echo "" >> "$GITHUB_STEP_SUMMARY"
           if [ "${{ github.event_name }}" = "pull_request" ]; then
-            echo "_PR test run: build succeeded. Pages deploys after merge to main/master._" >> "$GITHUB_STEP_SUMMARY"
+            echo "_PR test run: build verified. Pages deploys after merge to main/master._" >> "$GITHUB_STEP_SUMMARY"
           else
-            echo "_Deployment job publishes the site to GitHub Pages._" >> "$GITHUB_STEP_SUMMARY"
+            echo "_Site deployed via GitHub Pages (Actions source)._" >> "$GITHUB_STEP_SUMMARY"
           fi

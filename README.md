@@ -99,9 +99,8 @@ Open:
 ## GitHub Pages setup (one-time)
 
 1. Push this repository to GitHub.
-2. Go to **Settings → Pages**.
-3. Under **Build and deployment**, set **Source** to **GitHub Actions**.
-4. Push to `main` or `master` — the workflow deploys automatically.
+2. Go to **Settings → Pages** and confirm **Source** is set to **GitHub Actions** (the workflow can also auto-enable Pages on first deploy).
+3. Push to `main` or `master` — the workflow verifies, enables Pages if needed, and deploys automatically.
 
 ### Workflow behavior
 
