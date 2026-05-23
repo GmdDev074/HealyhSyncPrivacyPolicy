@@ -1,7 +1,12 @@
 /**
  * Applies Constants values to {{PLACEHOLDER}} tokens across the page.
  */
-(function applyConstants() {
+(function initApp() {
+    applyConstants();
+    initMobileNav();
+})();
+
+function applyConstants() {
     if (typeof Constants === 'undefined') {
         return;
     }
@@ -26,4 +31,41 @@
     if (document.body) {
         document.body.innerHTML = replaceTokens(document.body.innerHTML);
     }
-})();
+}
+
+function initMobileNav() {
+    const toggle = document.querySelector('.nav-toggle');
+    const backdrop = document.querySelector('.nav-backdrop');
+
+    if (!toggle) {
+        return;
+    }
+
+    function setNavOpen(isOpen) {
+        document.body.classList.toggle('nav-open', isOpen);
+        toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+        toggle.setAttribute('aria-label', isOpen ? 'Close menu' : 'Open menu');
+    }
+
+    toggle.addEventListener('click', () => {
+        setNavOpen(!document.body.classList.contains('nav-open'));
+    });
+
+    backdrop?.addEventListener('click', () => setNavOpen(false));
+
+    document.querySelectorAll('.nav-link, .nav-cta').forEach((link) => {
+        link.addEventListener('click', () => setNavOpen(false));
+    });
+
+    window.addEventListener('resize', () => {
+        if (window.innerWidth > 768) {
+            setNavOpen(false);
+        }
+    });
+
+    document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape') {
+            setNavOpen(false);
+        }
+    });
+}
