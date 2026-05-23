@@ -77,7 +77,7 @@ temp/
 *.temp
 *.bak
 *.backup
-_speaklu-*
+_scratch-*
 
 # --- Archives (usually accidental uploads) ---
 *.zip

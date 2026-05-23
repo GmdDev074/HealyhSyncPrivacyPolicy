@@ -1,6 +1,6 @@
 # HealthSync Legal Pages
 
-Static **Privacy Policy** and **Terms & Conditions** pages for the [HealthSync](https://play.google.com/store/apps/details?id=com.health.sync) Android app (`com.health.sync`). The layout and legal structure are modeled after [Speaklu’s legal pages](https://speaklu.com/privacy-policy.html), rebranded and adapted for HealthSync.
+Static **Privacy Policy** and **Terms & Conditions** pages for the [HealthSync](https://play.google.com/store/apps/details?id=com.health.sync) Android app (`com.health.sync`).
 
 The site is built with plain **HTML + CSS + JavaScript** (no framework) and deploys automatically to **GitHub Pages** on every push to `main` / `master`.
 
@@ -46,7 +46,7 @@ Each GitHub Actions run also prints these URLs in the **Workflow summary** tab.
 ├── index.html                           # Landing page with links to legal docs
 ├── privacy-policy.html                  # Privacy Policy
 ├── terms-and-conditions.html            # Terms & Conditions
-├── css/style.css                        # Shared styles (Speaklu-inspired layout)
+├── css/style.css                        # Shared styles
 ├── js/
 │   ├── constants.js                     # Manual config (edit this)
 │   ├── constants.generated.js           # Auto-generated dates (do not commit)
@@ -99,8 +99,8 @@ Open:
 ## GitHub Pages setup (one-time)
 
 1. Push this repository to GitHub.
-2. Go to **Settings → Pages** and confirm **Source** is set to **GitHub Actions** (the workflow can also auto-enable Pages on first deploy).
-3. Push to `main` or `master` — the workflow verifies, enables Pages if needed, and deploys automatically.
+2. Go to **Settings → Pages → Build and deployment** and set **Source** to **GitHub Actions**.
+3. Push to `main` or `master` — the workflow verifies and deploys automatically.
 
 ### Workflow behavior
 
