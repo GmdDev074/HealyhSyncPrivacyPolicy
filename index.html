@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="{{APP_NAME}} - Health and wellness tracking with secure data sync.">
+    <title>{{APP_NAME}} | Legal</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .home-hero {
+            padding: var(--spacing-xxl) 0;
+            text-align: center;
+        }
+
+        .home-hero h1 {
+            font-size: clamp(2rem, 5vw, 3rem);
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .home-hero p {
+            color: var(--color-text-secondary);
+            max-width: 680px;
+            margin: 0 auto var(--spacing-md);
+            line-height: var(--line-height-relaxed);
+        }
+
+        .home-hero .home-purpose {
+            max-width: 720px;
+            margin: 0 auto var(--spacing-xl);
+            text-align: left;
+            background-color: var(--color-gray-light);
+            padding: var(--spacing-lg);
+            border-radius: var(--border-radius);
+            border-left: 4px solid var(--primary-color);
+        }
+
+        .home-hero .home-purpose p {
+            margin: 0 0 var(--spacing-sm);
+            color: var(--color-text-primary);
+        }
+
+        .home-hero .home-purpose p:last-child {
+            margin-bottom: 0;
+        }
+
+        .home-hero .home-purpose ul {
+            list-style: none;
+            padding: 0;
+            margin: var(--spacing-sm) 0 0;
+        }
+
+        .home-hero .home-purpose li {
+            position: relative;
+            padding-left: var(--spacing-lg);
+            margin-bottom: var(--spacing-xs);
+            color: var(--color-text-primary);
+            line-height: var(--line-height-relaxed);
+        }
+
+        .home-hero .home-purpose li::before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            color: var(--primary-color);
+            font-weight: var(--font-weight-bold);
+        }
+
+        .home-links-label {
+            font-size: var(--font-size-small);
+            color: var(--color-text-secondary);
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .home-links {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: var(--spacing-sm);
+        }
+
+        .home-link {
+            display: inline-flex;
+            align-items: center;
+            padding: var(--spacing-md) var(--spacing-lg);
+            background-color: var(--color-gray-light);
+            color: var(--color-text-primary);
+            border: 1px solid var(--color-gray-medium);
+            border-radius: var(--border-radius);
+            font-weight: var(--font-weight-semibold);
+        }
+
+        .home-link:hover {
+            background-color: var(--color-gray-medium);
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+    <header class="header" role="banner">
+        <div class="container">
+            <nav class="nav">
+                <a href="{{HOME_URL}}" class="logo" aria-label="{{APP_NAME}} Home">
+                    <span class="logo-icon" aria-hidden="true">H</span>
+                    <span class="logo-text">{{APP_NAME}}</span>
+                </a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="home-hero">
+        <div class="container">
+            <h1>{{APP_NAME}}</h1>
+            <p>Your personal health companion — track, sync, and stay on top of your wellness journey.</p>
+
+            <div class="home-purpose">
+                <p>{{APP_DESCRIPTION}}</p>
+                <ul>
+                    <li>Track activity, steps, and daily health metrics</li>
+                    <li>Sync your data securely across devices</li>
+                    <li>View trends and personalized wellness insights</li>
+                    <li>Set goals and reminders to stay consistent</li>
+                </ul>
+            </motion>
+
+            <p class="home-links-label">Legal documents &amp; download</p>
+            <motion class="home-links">
+                <a href="{{PRIVACY_POLICY_URL}}" class="home-link">Privacy Policy</a>
+                <a href="{{TERMS_URL}}" class="home-link">Terms &amp; Conditions</a>
+                <a href="{{GOOGLE_PLAY_URL}}" class="home-link" target="_blank" rel="noopener">Google Play</a>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer" role="contentinfo">
+        <div class="container">
+            <div class="footer-bottom">
+                <p class="copyright">© Copyright {{COPYRIGHT_YEAR}}, All rights reserved · {{APP_EMAIL}}</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/constants.js"></script>
+    <script src="js/constants.generated.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>

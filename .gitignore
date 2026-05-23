@@ -1,0 +1,98 @@
+# --- OS & filesystem ---
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+desktop.ini
+$RECYCLE.BIN/
+
+# --- Editors & IDEs ---
+.vscode/
+!.vscode/extensions.json
+.idea/
+*.sublime-project
+*.sublime-workspace
+*.swp
+*.swo
+*~
+.project
+.classpath
+.settings/
+
+# --- Dependencies & package managers ---
+node_modules/
+.npm/
+.yarn/
+.pnp.*
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+bun.lock
+bun.lockb
+
+# --- Environment & secrets (never commit) ---
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+credentials.json
+secrets.json
+service-account*.json
+
+# --- Build & generated outputs ---
+js/constants.generated.js
+dist/
+build/
+out/
+.cache/
+.parcel-cache/
+.turbo/
+*.tsbuildinfo
+
+# --- Logs & debug ---
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+pnpm-debug.log*
+
+# --- Test & coverage ---
+coverage/
+.nyc_output/
+test-results/
+playwright-report/
+blob-report/
+
+# --- Temporary & scratch ---
+tmp/
+temp/
+*.tmp
+*.temp
+*.bak
+*.backup
+_speaklu-*
+
+# --- Archives (usually accidental uploads) ---
+*.zip
+*.tar
+*.tar.gz
+*.tgz
+*.rar
+*.7z
+
+# --- Local serve / deploy tools ---
+.vercel/
+.netlify/
+.firebase/
+
+# --- Misc tooling ---
+.eslintcache
+.stylelintcache
+*.local

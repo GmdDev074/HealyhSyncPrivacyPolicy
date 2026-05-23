@@ -1,0 +1,14 @@
+{
+  "name": "healthsync-legal-pages",
+  "version": "1.0.0",
+  "private": true,
+  "description": "HealthSync Privacy Policy and Terms & Conditions for GitHub Pages",
+  "scripts": {
+    "build": "node scripts/generate-dates.mjs",
+    "prepreview": "npm run build",
+    "preview": "npx --yes serve . -p 4173"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
