@@ -8,16 +8,13 @@ The site is built with plain **HTML + CSS + JavaScript** (no framework) and depl
 
 ## Live links
 
-After the first successful deploy, your pages will be available at:
+The site is live at:
 
 | Page | URL |
 |------|-----|
-| **Home** | `https://<github-username>.github.io/<repository-name>/` |
-| **Privacy Policy** | `https://<github-username>.github.io/<repository-name>/privacy-policy.html` |
-| **Terms & Conditions** | `https://<github-username>.github.io/<repository-name>/terms-and-conditions.html` |
-
-> **Example** — if your repo is `gmddev074/HealyhSyncPrivacyPolicy`, the Privacy Policy URL is:  
-> `https://gmddev074.github.io/HealyhSyncPrivacyPolicy/privacy-policy.html`
+| **Home** | https://gmddev074.github.io/HealyhSyncPrivacyPolicy/ |
+| **Privacy Policy** | https://gmddev074.github.io/HealyhSyncPrivacyPolicy/privacy-policy.html |
+| **Terms & Conditions** | https://gmddev074.github.io/HealyhSyncPrivacyPolicy/terms-and-conditions.html |
 
 Each GitHub Actions run also prints these URLs in the **Workflow summary** tab.
 
@@ -106,9 +103,9 @@ Open:
 4. Set **Source** to **Deploy from a branch**.
 5. Choose branch **`gh-pages`**, folder **`/ (root)`**, then click **Save**.
 
-Your site will be live within a few minutes at:
+Your site is live at:
 
-`https://<github-username>.github.io/<repository-name>/`
+https://gmddev074.github.io/HealyhSyncPrivacyPolicy/
 
 > You only need to configure the branch once. Every future push to `main`/`master` updates `gh-pages` automatically.
 
@@ -162,10 +159,10 @@ When you change legal content and push:
 
 ## Play Store usage
 
-Use the live GitHub Pages URLs in Google Play Console:
+Use these URLs in Google Play Console:
 
-- **Privacy policy URL** → `…/privacy-policy.html`
-- **Terms URL** (if required) → `…/terms-and-conditions.html`
+- **Privacy policy URL:** https://gmddev074.github.io/HealyhSyncPrivacyPolicy/privacy-policy.html
+- **Terms URL (if required):** https://gmddev074.github.io/HealyhSyncPrivacyPolicy/terms-and-conditions.html
 
 ---
 
