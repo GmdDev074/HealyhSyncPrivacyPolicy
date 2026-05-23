@@ -46,11 +46,10 @@ secrets.json
 service-account*.json
 
 # --- Build & generated outputs ---
-js/constants.generated.js
+# Generated at build time (local only — deployed via _site/)
+/js/site-dates.js
+/_site/
 dist/
-build/
-out/
-_site/
 .cache/
 .parcel-cache/
 .turbo/

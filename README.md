@@ -28,14 +28,14 @@ flowchart TD
         A[Edit js/constants.js<br/>app name, email, package] --> B[Edit HTML pages<br/>privacy-policy.html, terms-and-conditions.html]
         B --> C[npm run build]
         C --> D[scripts/generate-dates.mjs]
-        D --> E[js/constants.generated.js<br/>last-updated dates from git]
+        D --> E[js/site-dates.js<br/>last-updated dates from git]
         E --> F[npm run preview]
         F --> G[Browser loads pages]
     end
 
     subgraph runtime [Browser runtime]
         G --> H[js/constants.js]
-        H --> I[js/constants.generated.js]
+        H --> I[js/site-dates.js]
         I --> J[js/main.js replaces placeholders<br/>APP_NAME, APP_EMAIL, dates, etc.]
         J --> K[Rendered HealthSync legal site]
     end
@@ -61,7 +61,7 @@ flowchart TD
 |-------|----------------|
 | **1. Configure** | Set branding in `js/constants.js` (name, email, Play Store package). |
 | **2. Edit content** | Update legal text in `privacy-policy.html` and `terms-and-conditions.html`. |
-| **3. Build** | `generate-dates.mjs` reads git history and writes `constants.generated.js`. |
+| **3. Build** | `build-site.mjs` generates dates and pre-renders them into `_site/` HTML. |
 | **4. Preview** | `npm run preview` serves the site locally with all placeholders filled. |
 | **5. Push** | Commit and push to `main` — GitHub Actions runs automatically. |
 | **6. Verify** | Workflow validates files and generated dates (runs on PRs too). |
@@ -98,9 +98,11 @@ flowchart TD
 ├── css/style.css                        # Shared styles
 ├── js/
 │   ├── constants.js                     # Manual config (edit this)
-│   ├── constants.generated.js           # Auto-generated dates (do not commit)
+│   ├── site-dates.js           # Auto-generated dates (do not commit)
 │   └── main.js                          # Injects {{PLACEHOLDERS}} into pages
-├── scripts/generate-dates.mjs           # Builds constants.generated.js from git
+├── scripts/
+│   ├── generate-dates.mjs               # Writes js/site-dates.js from git
+│   └── build-site.mjs                   # Builds _site/ with dates baked into HTML
 ├── package.json                         # `npm run build` / `npm run preview`
 └── README.md
 ```
@@ -119,7 +121,7 @@ Edit **`js/constants.js`** to change branding:
 | `MIN_AGE` | 13 |
 | `SERVICE_DESCRIPTION` | Health/wellness tracking description |
 
-Do **not** edit `js/constants.generated.js` — it is recreated on every build.
+Do **not** edit `js/site-dates.js` — it is recreated on every build.
 
 ---
 
@@ -132,8 +134,8 @@ Do **not** edit `js/constants.generated.js` — it is recreated on every build.
 ### Preview locally
 
 ```bash
-npm run build    # Generate last-updated dates from git history
-npm run preview  # Serve at http://localhost:4173
+npm run build:site   # Generate dates + build _site/ folder
+npm run preview      # Serve at http://localhost:4173
 ```
 
 Open:
@@ -141,7 +143,7 @@ Open:
 - http://localhost:4173/privacy-policy.html  
 - http://localhost:4173/terms-and-conditions.html  
 
-> If you open HTML files directly in the browser (`file://`), `constants.generated.js` may be missing. Always run `npm run build` first.
+> If you open HTML files directly in the browser (`file://`), `site-dates.js` may be missing. Always run `npm run build` first.
 
 ---
 
@@ -185,7 +187,7 @@ When you change legal content and push:
 
 1. GitHub Actions checks out the full git history (`fetch-depth: 0`).
 2. `node scripts/generate-dates.mjs` inspects commit dates for watched files.
-3. `js/constants.generated.js` is written with fresh dates.
+3. `js/site-dates.js` is written with fresh dates.
 4. The site (including generated file) is deployed.
 
 **Watched files**
@@ -201,7 +203,7 @@ When you change legal content and push:
 
 `.gitignore` excludes generated artifacts, dependencies, secrets, OS/editor junk, logs, archives, and local tool folders so only source files are tracked. Notably:
 
-- `js/constants.generated.js` (rebuilt in CI)
+- `js/site-dates.js` (rebuilt in CI)
 - `node_modules/`, lockfiles, `.env*`
 - Editor folders (`.vscode/`, `.idea/`)
 - OS files (`.DS_Store`, `Thumbs.db`)

@@ -5,7 +5,8 @@
   "description": "HealthSync Privacy Policy and Terms & Conditions for GitHub Pages",
   "scripts": {
     "build": "node scripts/generate-dates.mjs",
-    "prepreview": "npm run build",
+    "build:site": "node scripts/build-site.mjs",
+    "prepreview": "npm run build:site",
     "preview": "npx --yes serve . -p 4173"
   },
   "engines": {

@@ -29,27 +29,15 @@ jobs:
         with:
           node-version: '20'
 
-      - name: Generate dynamic last-updated dates
-        env:
-          GITHUB_REPOSITORY: ${{ github.repository }}
-        run: node scripts/generate-dates.mjs
+      - name: Build publishable site
+        run: node scripts/build-site.mjs
 
-      - name: Verify generated constants exist
-        run: test -f js/constants.generated.js
-
-      - name: Verify placeholder replacement sources
+      - name: Verify built site contains dates
         run: |
-          grep -q "class Constants" js/constants.js
-          grep -q "PRIVACY_LAST_UPDATED" js/constants.generated.js
-          grep -q "TERMS_LAST_UPDATED" js/constants.generated.js
-
-      - name: Verify site files can be packaged
-        run: |
-          mkdir -p _site
-          cp index.html privacy-policy.html terms-and-conditions.html .nojekyll _site/
-          cp -r css js _site/
-          test -f _site/index.html
-          test -f _site/js/constants.generated.js
+          test -f _site/js/site-dates.js
+          grep -q "Last Updated:" _site/privacy-policy.html
+          grep -qv "Pending build" _site/privacy-policy.html
+          grep -qv "{{PRIVACY_LAST_UPDATED}}" _site/privacy-policy.html
 
   deploy:
     name: Deploy to GitHub Pages
@@ -69,16 +57,15 @@ jobs:
         with:
           node-version: '20'
 
-      - name: Generate dynamic last-updated dates
+      - name: Build publishable site
         env:
           GITHUB_REPOSITORY: ${{ github.repository }}
-        run: node scripts/generate-dates.mjs
+        run: node scripts/build-site.mjs
 
-      - name: Prepare publishable site
+      - name: Confirm dates in deployed HTML
         run: |
-          mkdir -p _site
-          cp index.html privacy-policy.html terms-and-conditions.html .nojekyll _site/
-          cp -r css js _site/
+          grep "Last Updated:" _site/privacy-policy.html
+          grep "Last Updated:" _site/terms-and-conditions.html
 
       - name: Deploy to gh-pages branch
         uses: peaceiris/actions-gh-pages@v4

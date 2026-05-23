@@ -9,7 +9,7 @@ import { dirname, join } from 'node:path';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const rootDir = join(__dirname, '..');
-const outputPath = join(rootDir, 'js', 'constants.generated.js');
+const outputPath = join(rootDir, 'js', 'site-dates.js');
 
 const PRIVACY_WATCH_FILES = [
     'privacy-policy.html',
@@ -89,11 +89,12 @@ Constants.PRIVACY_LAST_UPDATED = ${JSON.stringify(privacyDate)};
 Constants.TERMS_LAST_UPDATED = ${JSON.stringify(termsDate)};
 Constants.COPYRIGHT_YEAR = ${JSON.stringify(copyrightYear)};
 Constants.SITE_BASE_URL = ${JSON.stringify(siteBaseUrl)};
+Constants.IS_BUILD_READY = true;
 `;
 
 writeFileSync(outputPath, generated, 'utf8');
 
-console.log('Generated js/constants.generated.js');
+console.log('Generated js/site-dates.js');
 console.log(`  PRIVACY_LAST_UPDATED: ${privacyDate}`);
 console.log(`  TERMS_LAST_UPDATED:   ${termsDate}`);
 console.log(`  COPYRIGHT_YEAR:       ${copyrightYear}`);
