@@ -222,4 +222,6 @@ Use these URLs in Google Play Console:
 
 Copyright © 2026 **HealthSync**. All rights reserved.
 
-See [LICENSE](./LICENSE) for the full copyright notice.
+This project is proprietary. You may view the site and link to the official legal pages (for example, in Google Play), but you may not copy, redistribute, or commercially exploit the project without written permission.
+
+See [LICENSE](./LICENSE) for the full detailed license, including permitted use, restrictions, disclaimers, and contact information.
