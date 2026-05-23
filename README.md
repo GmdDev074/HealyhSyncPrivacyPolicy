@@ -98,9 +98,27 @@ Open:
 
 ## GitHub Pages setup (one-time)
 
-1. Push this repository to GitHub.
-2. Go to **Settings → Pages → Build and deployment** and set **Source** to **GitHub Actions**.
-3. Push to `main` or `master` — the workflow verifies and deploys automatically.
+> **Private repository?** On the free GitHub plan, Pages only works for **public** repositories. If Settings → Pages shows *“Upgrade or make this repository public to enable Pages”*, you must either **make this repo public** or use a paid GitHub plan. For a Play Store privacy policy site, a **public repo is recommended** — the pages are public anyway.
+
+1. Push this repository to GitHub and merge to `main` or `master`.
+2. Wait for the **Deploy GitHub Pages** workflow to finish — it publishes site files to the `gh-pages` branch.
+3. Go to **Settings → Pages → Build and deployment**.
+4. Set **Source** to **Deploy from a branch**.
+5. Choose branch **`gh-pages`**, folder **`/ (root)`**, then click **Save**.
+
+Your site will be live within a few minutes at:
+
+`https://<github-username>.github.io/<repository-name>/`
+
+> You only need to configure the branch once. Every future push to `main`/`master` updates `gh-pages` automatically.
+
+### If you don’t see “Source” under Pages
+
+| What you see | Cause | Fix |
+|--------------|-------|-----|
+| *“Upgrade or make this repository public to enable Pages”* | Repo is **private** on free plan | **Settings → General → Danger zone → Change visibility → Public** |
+| No Pages tab at all | No admin access to the repo | Ask the repo owner to enable Pages or make you admin |
+| Source appears but site 404 | `gh-pages` branch not created yet | Run the deploy workflow once, then pick `gh-pages` branch |
 
 ### Workflow behavior
 

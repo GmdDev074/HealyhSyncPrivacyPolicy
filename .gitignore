@@ -50,6 +50,7 @@ js/constants.generated.js
 dist/
 build/
 out/
+_site/
 .cache/
 .parcel-cache/
 .turbo/

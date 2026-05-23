@@ -9,8 +9,6 @@ on:
 
 permissions:
   contents: read
-  pages: write
-  id-token: write
 
 concurrency:
   group: pages-${{ github.ref }}
@@ -45,11 +43,21 @@ jobs:
           grep -q "PRIVACY_LAST_UPDATED" js/constants.generated.js
           grep -q "TERMS_LAST_UPDATED" js/constants.generated.js
 
-  build:
-    name: Package for Pages
+      - name: Verify site files can be packaged
+        run: |
+          mkdir -p _site
+          cp index.html privacy-policy.html terms-and-conditions.html .nojekyll _site/
+          cp -r css js _site/
+          test -f _site/index.html
+          test -f _site/js/constants.generated.js
+
+  deploy:
+    name: Deploy to GitHub Pages
     needs: verify
     if: github.event_name != 'pull_request'
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -66,26 +74,18 @@ jobs:
           GITHUB_REPOSITORY: ${{ github.repository }}
         run: node scripts/generate-dates.mjs
 
-      - name: Setup GitHub Pages
-        uses: actions/configure-pages@v5
+      - name: Prepare publishable site
+        run: |
+          mkdir -p _site
+          cp index.html privacy-policy.html terms-and-conditions.html .nojekyll _site/
+          cp -r css js _site/
 
-      - name: Upload Pages artifact
-        uses: actions/upload-pages-artifact@v3
+      - name: Deploy to gh-pages branch
+        uses: peaceiris/actions-gh-pages@v4
         with:
-          path: .
-
-  deploy:
-    name: Deploy to GitHub Pages
-    needs: build
-    if: github.event_name != 'pull_request'
-    runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    steps:
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./_site
+          force_orphan: true
 
   test-summary:
     name: Test run summary
@@ -109,7 +109,7 @@ jobs:
           echo "| Terms & Conditions | ${BASE}/terms-and-conditions.html |" >> "$GITHUB_STEP_SUMMARY"
           echo "" >> "$GITHUB_STEP_SUMMARY"
           if [ "${{ github.event_name }}" = "pull_request" ]; then
-            echo "_PR test run: build verified. Pages deploys after merge to main/master._" >> "$GITHUB_STEP_SUMMARY"
+            echo "_PR test run: build verified. Site deploys after merge to main/master._" >> "$GITHUB_STEP_SUMMARY"
           else
-            echo "_Site deployed via GitHub Pages (Actions source)._" >> "$GITHUB_STEP_SUMMARY"
+            echo "_Site published to the \`gh-pages\` branch. Enable Pages once (see README) if not live yet._" >> "$GITHUB_STEP_SUMMARY"
           fi
